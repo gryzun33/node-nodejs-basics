@@ -3,24 +3,28 @@ import { release, version } from 'os';
 import { createServer as createServerHttp } from 'http';
 import './files/c.js';
 import * as url from 'url';
-import fs from 'fs/promises';
+// import fs from 'fs/promises';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const pathToA = path.join(__dirname, './files/a.json');
-const pathToB = path.join(__dirname, './files/b.json');
+// const pathToA = path.join(__dirname, './files/a.json');
+// const pathToB = path.join(__dirname, './files/b.json');
 
 const random = Math.random();
 
 let unknownObject;
 
 if (random > 0.5) {
-  const data = await fs.readFile(pathToA, 'utf8');
-  unknownObject = JSON.parse(data);
+  const data = await import('./files/a.json', {
+    with: { type: 'json' },
+  });
+  unknownObject = data.default;
 } else {
-  const data = await fs.readFile(pathToB, 'utf8');
-  unknownObject = JSON.parse(data);
+  const data = await import('./files/b.json', {
+    with: { type: 'json' },
+  });
+  unknownObject = data.default;
 }
 
 console.log(`Release ${release()}`);
