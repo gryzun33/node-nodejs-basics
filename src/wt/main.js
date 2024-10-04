@@ -25,13 +25,12 @@ const performCalculations = async () => {
     workers.push(10 + i);
   }
 
-  Promise.all(workers.map(createWorker))
-    .then((results) => {
-      console.log(results);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  try {
+    const results = await Promise.all(workers.map(createWorker));
+    console.log(results);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 
 await performCalculations();
