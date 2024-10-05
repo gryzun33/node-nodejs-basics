@@ -1,10 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
-import * as url from 'url';
+import { fileURLToPath } from 'url';
 
 const copy = async () => {
   // Write your code here
-  const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
   const pathToOldDir = path.join(__dirname, 'files');
   const pathToNewDir = path.join(__dirname, 'files-copy');
   try {
